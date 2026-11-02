@@ -23,11 +23,12 @@ def heap(arr):
         heapify(arr, 0, i)
 
 def main():
-    rand_array = [random.randint(1, 10**7) for _ in range(10**6)]
-    start_time = time.perf_counter()
-    heap(rand_array)
-    end_time = time.perf_counter()
-    elapsed_time = end_time - start_time
-    print(f"Время выполнения: {elapsed_time:.6f} с.")
+    sizes = [10**2, 10**3, 10**4, 10**5, 10**6]
+    for size in sizes:
+        arr = [random.randint(0, 999) for _ in range(size)]
+        start = time.perf_counter()
+        heap(arr)
+        elapsed = time.perf_counter() - start
+        print(f"Размер: {size}, Время: {elapsed:.6f} с.")
 
 main()
