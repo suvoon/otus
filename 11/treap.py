@@ -1,4 +1,7 @@
 import random
+import sys
+
+sys.setrecursionlimit(200000)
 
 class Treap:
     def __init__(self, key, weight=1, left=None, right=None):
@@ -72,13 +75,33 @@ class Treap:
                 return new_root
             return self
 
+    def print_tree(self, node=None):
+        items = []
+        self._collect(node, items, 100)
+        for i, k in enumerate(items):
+            end = "\n" if (i + 1) % 20 == 0 else " "
+            print(str(k).rjust(5), end=end)
+        if len(items) > 0 and len(items) % 20 != 0:
+            print()
+
+    def _collect(self, node, acc, limit):
+        if node is None or len(acc) >= limit:
+            return
+        self._collect(node.left, acc, limit)
+        if len(acc) < limit:
+            acc.append(node.key)
+        self._collect(node.right, acc, limit)
+
 
 def main():
-    arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    random.seed(777)
+    arr = [random.randint(0, 1000 * 10) for _ in range(1000)]
     treap = Treap(arr[0])
     for i in range(1, len(arr)):
         treap = treap.add(arr[i])
-    treap = treap.remove(7)
+    treap = treap.remove(21)
+
+    treap.print_tree(treap)
 
 
 if __name__ == "__main__":

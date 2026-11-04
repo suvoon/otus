@@ -105,16 +105,27 @@ class Tree:
         min_node.left = node.left
 
     def print_tree(self, node=None):
-        if node is None:
+        items = []
+        self._collect(node, items, 100)
+        for i, k in enumerate(items):
+            end = "\n" if (i + 1) % 20 == 0 else " "
+            print(str(k).rjust(5), end=end)
+        if len(items) > 0 and len(items) % 20 != 0:
+            print()
+
+    def _collect(self, node, acc, limit):
+        if node is None or len(acc) >= limit:
             return
-        self.print_tree(node.left)
-        print(str(node.key).rjust(3) + " ", end="")
-        self.print_tree(node.right)
+        self._collect(node.left, acc, limit)
+        if len(acc) < limit:
+            acc.append(node.key)
+        self._collect(node.right, acc, limit)
+
 
 def main():
     sys.setrecursionlimit(200000)
 
-    N = 30000
+    N = 5000
 
     random_keys = [random.randint(0, N * 10) for _ in range(N)]
     ascending_keys = list(range(1, N + 1))
@@ -163,6 +174,14 @@ def main():
         tree_ascending.remove(k)
     t1 = time.perf_counter()
     print(f"Удаление {N // 10} ключей в возрастающем дереве:{t1 - t0:.4f} с")
+    print()
+
+    print("Случайное дерево — первые 100 ключей по возрастанию:")
+    tree_random.print_tree(tree_random.root)
+    print()
+
+    print("Возрастающее дерево — первые 100 ключей по возрастанию:")
+    tree_ascending.print_tree(tree_ascending.root)
 
 if __name__ == "__main__":
     main()
