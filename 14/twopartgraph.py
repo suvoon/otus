@@ -1,4 +1,4 @@
-class TwopPartGraph:
+class TwoPartGraph:
     def __init__(self, U, V, edges):
         self.U = U
         self.V = V
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     V_set = {4, 5, 6, 7}
     graph_edges = [(1, 6), (1, 7), (2, 4), (2, 7), (3, 5)]
 
-    graph = TwopPartGraph(U_set, V_set, graph_edges)
+    graph = TwoPartGraph(U_set, V_set, graph_edges)
 
     print("1. Перечень рёбер:")
     print(graph.get_edge_list())
